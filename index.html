@@ -380,6 +380,7 @@ textarea.plain:focus{border-color:rgba(0,212,161,0.3);}
         <div class="ifooter">
           <span class="cc" id="jdcc">0 characters</span>
           <button class="btn bp" id="evalBtn" onclick="runEval()"><div class="sp"></div><span>Evaluate</span></button>
+          <button class="btn" id="demoBtn" onclick="runDemo()" style="background:var(--bg3);border:1px solid var(--border3);color:var(--ink2);font-size:0.72rem;padding:6px 12px;border-radius:6px;cursor:pointer;font-family:var(--font-body);font-weight:500;letter-spacing:0.02em;margin-left:6px;" title="Load sample evaluation — no API key needed">▶ Demo</button>
         </div>
       </div>
       <div class="res" id="evalOut"></div>
@@ -2118,6 +2119,83 @@ document.addEventListener('mouseout', function(e) {
     if(tip) tip.remove();
   }
 });
+
+// ── DEMO MODE ──────────────────────────────────────────────────────────────
+var DEMO_DATA = {
+  company: "Skyline Health",
+  role: "Head of People Analytics & Workforce Intelligence",
+  score: 88,
+  domain_fit: 23,
+  domain_fit_note: "Direct match — people data infrastructure, self-service analytics, and operating model design are the core of this role. Scale (12,000 employees across 40 sites) maps well to prior experience.",
+  growth_signal: 21,
+  growth_signal_note: "Series D health system on an acquisition path. Headcount expected to double within 24 months. Real scope expansion built into the trajectory.",
+  culture_signal: 22,
+  culture_signal_note: "JD language emphasizes 'first principles thinking' and 'building durable systems over quick fixes.' Matches operating style well. No red flags.",
+  comp_logistics: 22,
+  comp_logistics_note: "Posted $240–280K base + equity + bonus. Remote-first with quarterly travel. Comfortably above floor.",
+  verdict: "Strong Fit — Prioritize",
+  summary: "This role is a direct line from prior experience — people data infrastructure at scale, operating model design, and AI-native tooling strategy. The acquisition growth path means the function will need to scale faster than it can hire, which favors someone who has built self-service systems from scratch. The comp range and remote model are both right. Move quickly.",
+  strengths: [
+    "People data infrastructure at scale — owned 150+ dashboards and pipelines across an 80K+ employee org",
+    "Operating model redesign from institutional knowledge — introduced PM disciplines, intake frameworks, delivery standards",
+    "AI tooling strategy — practitioner-level fluency building directly on LLM APIs, not just configuring vendors",
+    "Self-service analytics — built systems that eliminated recurring analyst requests and democratized data access",
+    "Cross-functional influence without authority — led engineering, analytics, and TPM across two large orgs"
+  ],
+  gaps: [
+    "Healthcare regulatory context (HIPAA, workforce compliance reporting) is a new domain — ramp expected",
+    "Multi-site distributed workforce analytics differs from single-campus or fully remote org models"
+  ],
+  comp_raw: "$240,000 – $280,000",
+  comp_tier: "San Francisco",
+  comp_floor_match: true,
+  level_signal: "Director / VP equivalent",
+  work_model: "Remote-first, quarterly travel"
+};
+
+var DEMO_JD = "Head of People Analytics & Workforce Intelligence — Skyline Health\n\nSkyline is a Series D regional health system (12,000 employees, 40 sites) growing aggressively through acquisition. We need a Head of People Analytics to own our workforce data infrastructure, build self-service reporting for HR and operations leaders, and develop our AI-native people analytics roadmap. This is a build role — you'll design the operating model, select the stack, and lead a small cross-functional team.\n\nBase: $240,000 – $280,000 + equity + bonus. Remote-first with quarterly travel to regional sites.";
+
+function runDemo() {
+  var out = document.getElementById('evalOut');
+  var jdBox = document.getElementById('jdText');
+  var demoBtn = document.getElementById('demoBtn');
+
+  // Pre-fill JD textarea with sample so it looks like a real eval
+  if (jdBox) {
+    jdBox.value = DEMO_JD;
+    var cc = document.getElementById('jdcc');
+    if (cc) cc.textContent = DEMO_JD.length + ' characters';
+  }
+
+  // Show loading state briefly so it feels real
+  demoBtn.textContent = '⏳ Loading...';
+  demoBtn.disabled = true;
+
+  setTimeout(function() {
+    lastEvalJD = DEMO_JD;
+    lastEvalCo = DEMO_DATA.company;
+    lastEvalRole = DEMO_DATA.role;
+    lastEvalData = DEMO_DATA;
+    lastEvalATS = 'ashby';
+    lastEvalURL = '';
+
+    renderDossierShell(DEMO_DATA);
+
+    // Show a demo banner above the result
+    var banner = document.getElementById('demoBanner');
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'demoBanner';
+      banner.style.cssText = 'background:var(--green-dim);border:1px solid var(--aborder);border-radius:8px;padding:9px 14px;font-size:0.74rem;color:var(--green);margin-bottom:12px;display:flex;align-items:center;gap:8px;';
+      banner.innerHTML = '<span style="font-size:1rem">▶</span><span><strong>Demo mode</strong> — sample role loaded. No API key required. <a href="https://github.com/itworkssly/veritas" target="_blank" style="color:var(--green);text-decoration:underline;margin-left:6px;">View on GitHub →</a></span>';
+      if (out.parentNode) out.parentNode.insertBefore(banner, out);
+    }
+
+    demoBtn.textContent = '▶ Demo';
+    demoBtn.disabled = false;
+  }, 800);
+}
+// ── END DEMO MODE ──────────────────────────────────────────────────────────
 </script>
 
 <div id="defaultProfile" data-profile="{&quot;name&quot;: &quot;&quot;, &quot;location&quot;: &quot;&quot;, &quot;title&quot;: &quot;&quot;, &quot;current&quot;: &quot;&quot;, &quot;summary&quot;: &quot;&quot;, &quot;prevRoles&quot;: &quot;&quot;, &quot;compFloor&quot;: &quot;&quot;, &quot;compTarget&quot;: &quot;&quot;, &quot;level&quot;: &quot;&quot;, &quot;workModel&quot;: &quot;remote preferred&quot;, &quot;equity&quot;: &quot;yes&quot;, &quot;roleType&quot;: &quot;both&quot;, &quot;dealBreakers&quot;: &quot;&quot;, &quot;targetCos&quot;: &quot;&quot;, &quot;strengths&quot;: &quot;&quot;, &quot;gaps&quot;: &quot;&quot;, &quot;voice&quot;: &quot;&quot;, &quot;samples&quot;: &quot;&quot;, &quot;avoid&quot;: &quot;&quot;}" style="display:none"></div>
