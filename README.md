@@ -1,64 +1,74 @@
 # Veritas
 
-**The truth about every role. The voice to pursue it.**
+A job search intelligence tool built on the Anthropic Claude API. Evaluates roles against your background, scores them across four dimensions, and tracks your pipeline — so you spend time on the right opportunities.
 
-Veritas is an AI-native job search intelligence system built on the Claude API. It evaluates roles, scores fit across four dimensions, and tracks your pipeline from first look to final round.
+**Live:** [itworkssly.github.io/veritas](https://itworkssly.github.io/veritas)
 
 ---
 
 ## What it does
 
-**Evaluate** — Paste a job description. Veritas scores fit across Domain, Growth, Culture, and Comp signals, surfaces your strengths and gaps against the role, and gives you a clear recommendation before you invest time in the process.
+Paste a job description and Veritas returns a structured evaluation:
 
-**Track** — Every role you've touched, organized by stage. Applied, screening, HM screen, interview, final round, offer, closed. The full picture in one view.
+- **Fit score** (0–100) broken down across four dimensions
+- **Domain Fit** — how closely the role maps to your actual experience
+- **Growth Signal** — trajectory and scope expansion potential
+- **Culture Signal** — JD language vs. your operating style
+- **Comp & Logistics** — comp range, level, work model against your parameters
+- Strengths, gaps, and a plain-language verdict
+- One-click add to pipeline tracker with stage, source, and notes
 
-**Dashboard** — Funnel analytics across your pipeline. Where are you converting? Where are you losing? What's stale?
-
-**Vox** — One-click briefing export to your AI writing workspace. Vox handles cover letters, interview prep, follow-up strategy, and positioning. Veritas feeds it the context.
+The tracker gives you a full view of everything in motion — applied, screening, interviewing, closed — with funnel analytics and a Vox sync log for AI-assisted career content.
 
 ---
 
-## How it works
+## Demo mode
 
-Veritas runs entirely in the browser. No backend, no database, no accounts. Your data lives in localStorage. Your API key never leaves your machine.
+No API key? No problem. Hit the **▶ Demo** button next to Evaluate to load a sample role evaluation instantly. You'll see the full scoring interface, breakdown panel, and verdict with no setup required.
 
-Built as a single HTML file. Deployable anywhere.
+---
 
-**To use Veritas, you will need two things:**
+## Setup
 
-- **An Anthropic API key** — Generate one at [console.anthropic.com](https://console.anthropic.com). Enter it in the Settings panel when you first open the tool.
-- **Your profile file** — Your candidate profile is not bundled with the tool. Import `veritas_profile.json` via the Settings panel. A starter template is included in this repo.
+1. Clone or download the repo
+2. Open `veritas_v1_2_public.html` in any browser — no build step, no dependencies
+3. Enter your [Anthropic API key](https://console.anthropic.com/) in the key field
+4. Optionally import your profile via `veritas_profile.json` for personalized scoring
+
+That's it. Single-file app, runs entirely in the browser.
+
+---
+
+## Profile
+
+Veritas scores roles against a candidate profile — your background, comp floor, work model preferences, target companies, and deal breakers. Load yours via **Settings → Import Profile** or build it manually in the UI.
+
+A sample profile schema is available in `veritas_profile.json`.
 
 ---
 
 ## Stack
 
-- Anthropic Claude API (claude-sonnet-4-20250514)
-- Vanilla JS, no framework
-- Local storage for persistence
-- Designed and spec'd in plain language. Engineered with Claude.
+- Vanilla JS, HTML, CSS — no framework, no build tooling
+- Anthropic Claude API (`claude-sonnet-4-20250514`) for role evaluation
+- `localStorage` for pipeline state
+- Runs fully client-side
 
 ---
 
-## The system
+## Versioning
 
-Veritas is one half of a two-tool job search system.
-
-| Tool | Role |
-|------|------|
-| **Veritas** | Evaluation, scoring, pipeline tracking |
-| **Vox** | Writing, prep, strategy, positioning |
-
-The two tools share context through a structured briefing Veritas generates. Vox reads it at the start of every session. You stay oriented. Every conversation starts informed.
+Current version: `v1.2`  
+Files follow underscore convention: `veritas_v1_2_public.html`
 
 ---
 
 ## Background
 
-Built by a PM with 15 years in TA and People Operations who needed a better way to run a serious job search. The scoring model, dimensions, UX, and briefing format were all designed by hand. Claude handled the implementation.
-
-This is what AI-native product development looks like in practice: a real problem, a clear spec, a working tool.
+Veritas started as a personal tool during a job search and grew into a proof of concept for AI-native workflow design. The scoring model, dimension weights, evaluation prompt, and UX were designed by a PM; Claude handled implementation. The companion workspace for career content (cover letters, interview prep, outreach) is Vox, a Claude Project.
 
 ---
 
-*Veritas. From the Latin for truth.*
+## License
+
+MIT
