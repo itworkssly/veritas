@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Veritas v1_1</title>
+<title>Veritas v1_2</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23111316%22/><rect x=%2216%22 y=%2264%22 width=%2212%22 height=%2222%22 rx=%222%22 fill=%22%2300D4A1%22 opacity=%220.4%22/><rect x=%2232%22 y=%2252%22 width=%2212%22 height=%2234%22 rx=%222%22 fill=%22%2300D4A1%22 opacity=%220.65%22/><rect x=%2248%22 y=%2238%22 width=%2212%22 height=%2248%22 rx=%222%22 fill=%22%2300D4A1%22 opacity=%220.85%22/><rect x=%2264%22 y=%2222%22 width=%2212%22 height=%2264%22 rx=%222%22 fill=%22%2300D4A1%22/></svg>">
 
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -767,7 +767,7 @@ function dSince(ds){if(!ds) return null;return Math.floor((Date.now()-new Date(d
 
 function esc(t){if(!t) return '';return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-var PARK_VERSION='veritas_v1_1';
+var PARK_VERSION='veritas_v1_2';
 var safeMD=boldMD;
 function truncStr(s,n){if(!s) return '';return s.length>n?s.slice(0,n)+'...':s;}
 
@@ -802,15 +802,18 @@ function buildEvalPrompt(){
   t+='- Recruiting Operations, People Operations, TA Operations, and HR Operations roles are STRONG domain alignment — never treat ops-focused roles as limiting or a mismatch.\n';
   t+='- The candidate is currently an IC and is open to BOTH IC and People Manager roles. Evaluate on scope, impact, and comp — not title seniority.\n';
   t+='- Do NOT flag absence of Director or Head of titles as a gap. Strong IC scope at L6/7 is valid progression.\n';
+  t+='- AI Transformation, AI Enablement, AI Program Manager, and similar roles are TECHNICAL PM roles requiring AI fluency and change management — NOT engineering or ML engineering roles. Do not penalize for absence of CS degree, coding skills, or ML background unless the JD explicitly requires building models.\n';
+  t+='- When a JD uses terms like "agentic workflows", "AI prototypes", "LLM integration", or "AI adoption" in a People/HR/TA context, treat this as a strong domain match for a candidate who has built AI tooling on the Claude API and led AI-enabled workflow automation.\n';
+  t+='- A score in the 40s for a TA/People Ops/AI Transformation role is almost certainly a scoring error. Re-read the JD carefully before assigning domain_fit below 15.\n';
   t+='- Use the candidate name from their profile in all outputs, not generic phrases like "the candidate".\n\n';
   t+='LOCATION: '+(p.location||'San Francisco, CA')+' — always use Zone 1 or highest compensation tier. Never comment on zone unless comp is genuinely below the floor.\n';
   t+='CURRENT: '+(p.current||'Not specified')+'\n';
-  if(p.prevRoles) t+='\nBACKGROUND:\n'+truncStr(p.prevRoles,300)+'\n';
-  if(p.summary) t+=truncStr(p.summary,300)+'\n';
+  if(p.prevRoles) t+='\nBACKGROUND:\n'+truncStr(p.prevRoles,800)+'\n';
+  if(p.summary) t+=truncStr(p.summary,600)+'\n';
   t+='\nLocation: '+(p.location||'San Francisco, CA')+' — use this to select the correct geographic comp tier when multiple tiers are listed in the JD.\nWork preference: '+(p.workModel||'remote preferred')+'\nTarget level: '+(p.level||'senior')+'\nRole type: '+(p.roleType||'both IC and People Manager')+'\nComp floor: '+(p.compFloor||'$225K')+' base minimum. Target: '+(p.compTarget||'$225K-$300K+')+'.\n';
   if(p.equity==='yes') t+='Equity required.\n';
-  if(p.strengths){t+='\nCORE STRENGTHS:\n'+truncStr(p.strengths,1400)+'\n';}
-  if(p.gaps){t+='\nHONEST GAPS:\n'+truncStr(p.gaps,400)+'\n';}
+  if(p.strengths){t+='\nCORE STRENGTHS:\n'+truncStr(p.strengths,2000)+'\n';}
+  if(p.gaps){t+='\nHONEST GAPS:\n'+truncStr(p.gaps,600)+'\n';}
   if(p.dealBreakers){t+='\nDEAL BREAKERS:\n';p.dealBreakers.split('\n').forEach(function(d){if(d.trim()) t+='- '+d.trim()+'\n';});}
   if(p.targetCos){t+='\nTARGET COMPANIES:\n';p.targetCos.split('\n').forEach(function(c){if(c.trim()) t+='- '+c.trim()+'\n';});}
   t+='\nPRIORITIES:\n1. Career fit\'s trajectory?\n2. Growth potential\n3. Cultural signal\n4. Comp fit\n\nINSIGHTS: Bold key terms. Career fit first. Be specific.\n\nCOMP NOTE: Only if informative.\n\nRespond ONLY with valid JSON, no markdown:\n{"score":NUMBER,"verdict":"Strong Yes or Yes or Maybe or Pass","company":"NAME","role":"TITLE","summary":"2-3 sentences on career fit","strengths":["**skill**: detail","...","...","..."],"gaps":["**gap**: detail","...","..."],"comp_range":"salary range from JD. Use SF Bay Area tier if multiple listed. Format $X-$Y or Unknown.","comp_flag":"Within range or Below floor or Above target or Unknown — evaluate against the SF Bay Area tier if multiple tiers exist","comp_note":"1 sentence if informative","recommendation":"2-3 sentences. State the call with reason.","career_insight":"1-2 sentences on how this role could advance the candidate\'s trajectory","culture_fit":"1 sentence on cultural fit","domain_fit":NUMBER_0_TO_25,"domain_fit_note":"1 sentence","growth_signal":NUMBER_0_TO_25,"growth_signal_note":"1 sentence","culture_signal":NUMBER_0_TO_25,"culture_signal_note":"1 sentence","comp_logistics":NUMBER_0_TO_25,"comp_logistics_note":"1 sentence"}\n\n\n\nSUB-SCORES (each 0-25, must sum to overall score): domain_fit=background vs requirements. growth_signal=scope/skill expansion. culture_signal=JD language vs operating style. comp_logistics=comp/level/work model fit.';
@@ -828,7 +831,7 @@ async function runEval(retryCount){
   btn.classList.add('loading');btn.disabled=true;
   out.className='res';out.innerHTML='';
   try{
-    var jdTrunc=jd.slice(0,2800);var txt=await callAPI(buildEvalPrompt(),'Evaluate this job description:\n\n'+jdTrunc,1200);
+    var jdTrunc=jd.slice(0,5000);var txt=await callAPI(buildEvalPrompt(),'Evaluate this job description:\n\n'+jdTrunc,1200);
     var clean=txt.replace(/```json|```/g,'').trim();var fi=clean.indexOf('{'),la=clean.lastIndexOf('}');if(fi!==-1&&la!==-1&&la>fi) clean=clean.slice(fi,la+1);
     var d=JSON.parse(repairJSON(clean));
     lastEvalJD=jd;
