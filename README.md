@@ -24,6 +24,11 @@ Veritas runs entirely in the browser. No backend, no database, no accounts. Your
 
 Built as a single HTML file. Deployable anywhere.
 
+**To use Veritas, you will need two things:**
+
+- **An Anthropic API key** — Generate one at [console.anthropic.com](https://console.anthropic.com). Enter it in the Settings panel when you first open the tool.
+- **Your profile file** — Your candidate profile is not bundled with the tool. Import `veritas_profile.json` via the Settings panel. A starter template is included in this repo.
+
 ---
 
 ## Stack
