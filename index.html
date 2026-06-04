@@ -2121,6 +2121,16 @@ document.addEventListener('mouseout', function(e) {
 });
 
 // ── DEMO MODE ──────────────────────────────────────────────────────────────
+var DEMO_APPS = [
+  {id:'demo-1',company:'Skyline Health',role:'Head of People Analytics & Workforce Intelligence',stage:'hm-screen',status:'active',score:'88',comp:'$240,000 – $280,000',source:'linkedin',referral:'',recruiter:'Jamie Osei',dateApplied:'2026-05-20',lastContact:'2026-06-02',workModel:'remote',roleType:'People Manager',level:'VP',notes:'Strong call with recruiter. HM screen scheduled.',resumeVersion:'general',coverLetter:'yes',feedbackTags:[]},
+  {id:'demo-2',company:'Fathom Analytics',role:'Director, TA Operations & AI Enablement',stage:'interview',status:'active',score:'81',comp:'$230,000 – $255,000',source:'referral',referral:'Dana Park',recruiter:'Chris Navarro',dateApplied:'2026-05-12',lastContact:'2026-05-30',workModel:'remote',roleType:'People Manager',level:'Director',notes:'Panel interview week of June 9. Strong referral from Dana.',resumeVersion:'general',coverLetter:'yes',feedbackTags:[]},
+  {id:'demo-3',company:'Northgate Insurance',role:'VP, Workforce Intelligence',stage:'screen',status:'active',score:'74',comp:'$210,000 – $235,000',source:'linkedin',referral:'',recruiter:'Priya Mehta',dateApplied:'2026-05-28',lastContact:'2026-05-28',workModel:'hybrid',roleType:'People Manager',level:'VP',notes:'Recruiter screen scheduled for June 6.',resumeVersion:'general',coverLetter:'none',feedbackTags:[]},
+  {id:'demo-4',company:'Cascade Robotics',role:'Senior PM, People Data Products',stage:'applied',status:'active',score:'77',comp:'$220,000 – $250,000',source:'direct',referral:'',recruiter:'',dateApplied:'2026-06-01',lastContact:'2026-06-01',workModel:'remote',roleType:'IC',level:'L7',notes:'Applied direct. No response yet.',resumeVersion:'general',coverLetter:'yes',feedbackTags:[]},
+  {id:'demo-5',company:'Meridian Bank',role:'Head of HR Analytics',stage:'applied',status:'active',score:'69',comp:'$195,000 – $220,000',source:'job-board',referral:'',recruiter:'',dateApplied:'2026-05-31',lastContact:'2026-05-31',workModel:'hybrid',roleType:'People Manager',level:'Director',notes:'Below comp floor but interesting scope. Monitoring.',resumeVersion:'general',coverLetter:'none',feedbackTags:[]},
+  {id:'demo-6',company:'Crestline Financial',role:'VP, Revenue Operations & GTM Analytics',stage:'rejected',status:'closed',score:'61',comp:'$185,000 – $215,000',source:'linkedin',referral:'',recruiter:'Tom Ricci',dateApplied:'2026-04-15',lastContact:'2026-05-01',workModel:'hybrid',roleType:'People Manager',level:'VP',outcome:'rejected',furthestStage:'screen',notes:'Domain mismatch — CRM/RevOps not a fit.',resumeVersion:'general',coverLetter:'none',feedbackTags:['domain-mismatch','comp-below-floor']},
+  {id:'demo-7',company:'Luminary Health',role:'Director, People Analytics',stage:'rejected',status:'closed',score:'79',comp:'$215,000 – $240,000',source:'referral',referral:'Alex Kim',recruiter:'Sarah Diaz',dateApplied:'2026-04-22',lastContact:'2026-05-10',workModel:'remote',roleType:'People Manager',level:'Director',outcome:'rejected',furthestStage:'hm-screen',notes:'Went with internal candidate.',resumeVersion:'general',coverLetter:'yes',feedbackTags:['internal-candidate','strong-interview']}
+];
+
 var DEMO_DATA = {
   company: "Skyline Health",
   role: "Head of People Analytics & Workforce Intelligence",
@@ -2172,22 +2182,28 @@ function runDemo() {
   demoBtn.disabled = true;
 
   setTimeout(function() {
+    // Seed eval tab
     lastEvalJD = DEMO_JD;
     lastEvalCo = DEMO_DATA.company;
     lastEvalRole = DEMO_DATA.role;
     lastEvalData = DEMO_DATA;
     lastEvalATS = 'ashby';
     lastEvalURL = '';
-
     renderDossierShell(DEMO_DATA);
 
-    // Show a demo banner above the result
+    // Seed tracker, dashboard, closed — only if no real data exists
+    if (apps.length === 0) {
+      apps = DEMO_APPS.slice();
+      refresh();
+    }
+
+    // Demo banner above eval result
     var banner = document.getElementById('demoBanner');
     if (!banner) {
       banner = document.createElement('div');
       banner.id = 'demoBanner';
       banner.style.cssText = 'background:var(--green-dim);border:1px solid var(--aborder);border-radius:8px;padding:9px 14px;font-size:0.74rem;color:var(--green);margin-bottom:12px;display:flex;align-items:center;gap:8px;';
-      banner.innerHTML = '<span style="font-size:1rem">▶</span><span><strong>Demo mode</strong> — sample role loaded. No API key required. <a href="https://github.com/itworkssly/veritas" target="_blank" style="color:var(--green);text-decoration:underline;margin-left:6px;">View on GitHub →</a></span>';
+      banner.innerHTML = '<span style="font-size:1rem">▶</span><span><strong>Demo mode</strong> — sample pipeline loaded across all tabs. No API key required. <a href="https://github.com/itworkssly/veritas" target="_blank" style="color:var(--green);text-decoration:underline;margin-left:6px;">View on GitHub →</a></span>';
       if (out.parentNode) out.parentNode.insertBefore(banner, out);
     }
 
