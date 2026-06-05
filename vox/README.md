@@ -50,9 +50,39 @@ The persona architecture matters too. A single AI assistant doing everything ten
 
 ## How to Use Vox
 
-![Vox user flow](./vox_flow.svg)
+```mermaid
+flowchart TD
+    subgraph setup["One-time setup"]
+        A[Personalize VOX_CONTEXT.md] --> C[Upload files + system prompt]
+        B[Create Claude Project] --> C
+    end
 
-*The diagram above shows the full flow: one-time setup, each session, the four main output types, and the feedback loop back to iteration. The Veritas connection is shown as a parallel input — optional but useful for pipeline context.*
+    subgraph session["Each session"]
+        C --> D[Open Vox Project]
+        D --> E[Paste Vox Briefing\nfrom Veritas — optional]
+        E --> F{What do you need?}
+    end
+
+    subgraph veritas["Veritas"]
+        V[Evaluate roles\ngenerate briefing]
+    end
+
+    V -->|Pipeline Briefing| E
+
+    subgraph outputs["Outputs"]
+        F --> G[Cover letter\nPaste JD → .docx]
+        F --> H[Interview prep\nInfographic + flashcards]
+        F --> I[JD analysis\nScore + bullet rewrites]
+        F --> J[Outreach\nCold, warm, recruiter]
+    end
+
+    subgraph iterate["Iterate"]
+        G & H & I & J --> K[Full artifact delivered]
+        K --> L[Edit or approve]
+        L -->|Revise| F
+        L --> M[Save to Drive or use]
+    end
+```
 
 A typical session looks like this:
 
