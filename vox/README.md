@@ -52,6 +52,17 @@ The persona architecture matters too. A single AI assistant doing everything ten
 
 
 
+```mermaid
+flowchart LR
+    A[Personalize\nVOX_CONTEXT.md] --> B[Create Claude\nProject + upload files]
+    B --> C[Open Vox]
+    C --> D[Paste Veritas\nbriefing — optional]
+    D --> E[State what\nyou need]
+    E --> F[Full artifact\ndelivered]
+    F --> G[Edit or\napprove]
+    G -->|Revise| E
+```
+
 A typical session looks like this:
 
 1. Open the Vox Project in Claude.
