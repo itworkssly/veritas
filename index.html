@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Veritas v1_2</title>
+<title>Veritas v1_3</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23111316%22/><rect x=%2216%22 y=%2264%22 width=%2212%22 height=%2222%22 rx=%222%22 fill=%22%2300D4A1%22 opacity=%220.4%22/><rect x=%2232%22 y=%2252%22 width=%2212%22 height=%2234%22 rx=%222%22 fill=%22%2300D4A1%22 opacity=%220.65%22/><rect x=%2248%22 y=%2238%22 width=%2212%22 height=%2248%22 rx=%222%22 fill=%22%2300D4A1%22 opacity=%220.85%22/><rect x=%2264%22 y=%2222%22 width=%2212%22 height=%2264%22 rx=%222%22 fill=%22%2300D4A1%22/></svg>">
 
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -37,8 +37,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-heig
 .tb{background:none;border:none;padding:5px 11px;font-family:var(--font-body);font-size:0.72rem;font-weight:500;color:var(--ink3);cursor:pointer;border-radius:5px;transition:all 0.15s;display:flex;align-items:center;gap:4px;letter-spacing:0.01em;}
 .tb:hover{color:var(--ink);background:var(--bg3);}
 .tb.active{color:var(--ink);background:var(--bg3);position:relative;}.tb.active::after{content:"";position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:60%;height:2px;background:var(--green);border-radius:1px;}
-.tb.camden-tab{color:var(--green);border:1px solid var(--green-dim);background:var(--green-dim);margin-left:8px;font-weight:600;letter-spacing:0.04em;}
-.tb.camden-tab:hover{background:rgba(0,212,161,0.15);}
+.tb.vox-tab{color:var(--green);border:1px solid var(--green-dim);background:var(--green-dim);margin-left:8px;font-weight:600;letter-spacing:0.04em;}
+.tb.vox-tab:hover{background:rgba(0,212,161,0.15);}
 .bx{background:var(--green);color:#000;font-size:0.58rem;font-weight:700;padding:1px 5px;border-radius:9px;min-width:14px;text-align:center;}
 .bx.dim{background:var(--bg4);color:var(--ink3);}
 
@@ -300,7 +300,7 @@ textarea.plain:focus{border-color:rgba(0,212,161,0.3);}
 .alert-chip{display:inline-flex;align-items:center;gap:4px;background:var(--amber-dim);border:1px solid rgba(240,165,0,0.15);border-radius:4px;padding:2px 7px;white-space:nowrap;}
 .alert-chip-co{font-size:0.68rem;font-weight:600;color:var(--ink2);}
 .alert-chip-days{font-family:var(--font-mono);font-size:0.63rem;color:var(--amber);}
-.is-camden{padding:0 12px;flex-shrink:0;}
+.is-vox{padding:0 12px;flex-shrink:0;}
 .page-wrap{max-width:860px;margin:0 auto;padding:0 28px;}
 .page{display:none;}.page.active{display:block;}
 .center-pad{padding:24px 0 80px;}
@@ -344,7 +344,7 @@ textarea.plain:focus{border-color:rgba(0,212,161,0.3);}
       <button class="tb" onclick="nav('dash',this)">Dashboard</button>
       <button class="tb" onclick="nav('closed',this)">Closed<span class="bx dim" id="cbadge">0</span></button>
       <button class="tb" onclick="nav('settings',this)">Settings<span class="bx dim" id="sbadge" style="display:none">!</span></button>
-      <button class="tb" onclick="generateCamdenBriefing()">→ Vox</button>
+      <button class="tb" onclick="generateVoxBriefing()">→ Vox</button>
     </div>
   </div>
 </div>
@@ -358,8 +358,8 @@ textarea.plain:focus{border-color:rgba(0,212,161,0.3);}
     <div class="is-stat"><span class="is-n" id="stripAvg">--</span><span class="is-l">avg score</span></div>
   </div>
   <div class="is-alerts" id="stripAlerts"></div>
-  <div class="is-camden">
-    <button class="btn ba" style="padding:3px 12px;font-size:0.68rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap" onclick="generateCamdenBriefing()">Vox</button>
+  <div class="is-vox">
+    <button class="btn ba" style="padding:3px 12px;font-size:0.68rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap" onclick="generateVoxBriefing()">Vox</button>
   </div>
 </div>
 
@@ -380,7 +380,6 @@ textarea.plain:focus{border-color:rgba(0,212,161,0.3);}
         <div class="ifooter">
           <span class="cc" id="jdcc">0 characters</span>
           <button class="btn bp" id="evalBtn" onclick="runEval()"><div class="sp"></div><span>Evaluate</span></button>
-          <button class="btn" id="demoBtn" onclick="runDemo()" style="background:var(--bg3);border:1px solid var(--border3);color:var(--ink2);font-size:0.72rem;padding:6px 12px;border-radius:6px;cursor:pointer;font-family:var(--font-body);font-weight:500;letter-spacing:0.02em;margin-left:6px;" title="Load sample evaluation — no API key needed">▶ Demo</button>
         </div>
       </div>
       <div class="res" id="evalOut"></div>
@@ -391,11 +390,18 @@ textarea.plain:focus{border-color:rgba(0,212,161,0.3);}
     <div class="center-pad">
       <div class="pt">Tracker</div>
       <p class="ps">Everything you have touched. Click to edit, shift-click to compare.</p>
+      <div id="whatsNew" style="background:var(--green-dim);border:1px solid var(--aborder);border-radius:8px;padding:11px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:12px">
+        <div style="flex:1">
+          <div style="font-size:0.7rem;font-weight:700;color:var(--green);letter-spacing:0.03em;text-transform:uppercase;margin-bottom:3px">What&#39;s new &middot; v1_3</div>
+          <div style="font-size:0.8rem;color:var(--ink2);line-height:1.45">Comp scoring now uses estimated <strong style="color:var(--ink)">total comp</strong> against your floor, not base alone. Bonus, equity, and benefits count; private equity gets a liquidity haircut. Existing scores keep their old numbers. Re-run a role to apply the new logic. Chime and BetterUp are the two worth re-running first.</div>
+        </div>
+        <button onclick="document.getElementById('whatsNew').style.display='none'" style="background:none;border:none;color:var(--ink3);font-size:1.1rem;line-height:1;cursor:pointer;padding:0 2px;flex-shrink:0" aria-label="Dismiss">&times;</button>
+      </div>
       <div class="tb2">
         <input type="text" class="si" id="trkSearch" placeholder="Search company or role..." oninput="renderTracker()">
         <button class="btn ba" id="cmpBtn" onclick="doCompare()" style="display:none">Compare</button>
         <button class="btn bd" id="selAllBtn" onclick="selectAllVisible()" style="display:none">Select All</button>
-        <button class="btn ba" onclick="openCamdenSync()" style="white-space:nowrap">← Sync Vox</button>
+        <button class="btn ba" onclick="openVoxSync()" style="white-space:nowrap">← Sync Vox</button>
         <button class="btn bp" onclick="openAdd()">+ Add</button>
       </div>
       <div id="bulkBar" style="display:none;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:10px;align-items:center;gap:10px;flex-wrap:wrap">
@@ -501,20 +507,20 @@ textarea.plain:focus{border-color:rgba(0,212,161,0.3);}
 <input type="file" id="impAppsFile" accept=".json" style="display:none" onchange="handleAppsImport(event)">
 
 <!-- CAMDEN SYNC MODAL -->
-<div class="overlay" id="camdenSyncModal">
+<div class="overlay" id="voxSyncModal">
   <div class="modal" style="max-width:500px">
     <div class="mh">
       <div class="mt">Sync from Vox</div>
-      <button class="mx" onclick="closeCamdenSync()">✕</button>
+      <button class="mx" onclick="closeVoxSync()">✕</button>
     </div>
     <p style="font-size:0.8rem;color:var(--ink2);margin-bottom:14px;line-height:1.6">Paste the Veritas update block Vox gave you. It will find the matching role and update the record automatically.</p>
-    <label class="fl">Park update block</label>
-    <textarea class="plain" id="camdenSyncInput" rows="8" placeholder="VERITAS UPDATEplaceholder="PARK UPDATE&#10;Company: LinkedIn&#10;Stage: HM Screen&#10;Notes: Meta narrative resonated. George flagged comp alignment.&#10;Energy: High&#10;Next action: Follow up Thursday"#10;Company: Acme Corpplaceholder="PARK UPDATE&#10;Company: LinkedIn&#10;Stage: HM Screen&#10;Notes: Meta narrative resonated. George flagged comp alignment.&#10;Energy: High&#10;Next action: Follow up Thursday"#10;Stage: HM Screenplaceholder="PARK UPDATE&#10;Company: LinkedIn&#10;Stage: HM Screen&#10;Notes: Meta narrative resonated. George flagged comp alignment.&#10;Energy: High&#10;Next action: Follow up Thursday"#10;Notes: Strong conversation.placeholder="PARK UPDATE&#10;Company: LinkedIn&#10;Stage: HM Screen&#10;Notes: Meta narrative resonated. George flagged comp alignment.&#10;Energy: High&#10;Next action: Follow up Thursday"#10;Energy: Highplaceholder="PARK UPDATE&#10;Company: LinkedIn&#10;Stage: HM Screen&#10;Notes: Meta narrative resonated. George flagged comp alignment.&#10;Energy: High&#10;Next action: Follow up Thursday"#10;Next action: Follow up Friday"></textarea>
-    <div id="camdenSyncPreview" style="display:none;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:0.78rem;color:var(--ink2);line-height:1.7"></div>
-    <div id="camdenSyncMsg"></div>
+    <label class="fl">Vox update block</label>
+    <textarea class="plain" id="voxSyncInput" rows="8" placeholder="VERITAS UPDATE&#10;Company: Acme Corp&#10;Stage: HM Screen&#10;Notes: Strong conversation.&#10;Energy: High&#10;Next action: Follow up Friday"></textarea>
+    <div id="voxSyncPreview" style="display:none;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:0.78rem;color:var(--ink2);line-height:1.7"></div>
+    <div id="voxSyncMsg"></div>
     <div style="display:flex;gap:8px">
-      <button class="btn bp" onclick="applyCamdenSync()" style="flex:1">Apply Update</button>
-      <button class="btn bg" onclick="closeCamdenSync()">Cancel</button>
+      <button class="btn bp" onclick="applyVoxSync()" style="flex:1">Apply Update</button>
+      <button class="btn bg" onclick="closeVoxSync()">Cancel</button>
     </div>
   </div>
 </div>
@@ -565,7 +571,7 @@ textarea.plain:focus{border-color:rgba(0,212,161,0.3);}
     <label class="fl">Notes <span class="tt tip" data-tip="Your working notes. Free text — jot anything relevant.">?</span></label>
     <textarea class="plain" id="mNotes" rows="5" placeholder="Recruiter name, interview format, things to prep, anything worth remembering..." style="font-size:0.82rem;line-height:1.7;font-family:var(--font-body)"></textarea>
     <label class="fl" style="margin-top:4px">Vox Sync Log <span class="tt tip" data-tip="Auto-populated when Vox writes back a Veritas update. Read-only — edited by Vox syncs only.">?</span></label>
-    <textarea class="plain" id="mCamdenLog" rows="4" placeholder="No Vox syncs yet for this role..." readonly style="font-size:0.75rem;line-height:1.7;color:var(--ink3);font-family:var(--font-mono);cursor:default;opacity:0.85"></textarea>
+    <textarea class="plain" id="mVoxLog" rows="4" placeholder="No Vox syncs yet for this role..." readonly style="font-size:0.75rem;line-height:1.7;color:var(--ink3);font-family:var(--font-mono);cursor:default;opacity:0.85"></textarea>
     <label class="fl">Official Feedback <span class="tt tip" data-tip="What they told you: recruiter call, email, or debrief.">?</span></label><textarea class="plain" id="mFBo" rows="3" placeholder="What they told you directly..."></textarea>
     <label class="fl">Inside Feedback <span class="tt tip" data-tip="What you heard through your referral or informal channels.">?</span></label><textarea class="plain" id="mFBi" rows="3" placeholder="What you heard informally..."></textarea>
     <label class="fl">Self Assessment <span class="tt tip" data-tip="Your own read. Surfaces in post-search analysis.">?</span></label><textarea class="plain" id="mFBs" rows="3" placeholder="Your own read..."></textarea>
@@ -617,7 +623,7 @@ function sset(k,v){
 function loadAll(){
   var loaded=0;
   function onBothLoaded(){loaded++;if(loaded===2){refresh();popSelects();popSettings();updateCB();checkBanner();loadKey();}}
-  sget(SKA,function(r){try{if(r) apps=JSON.parse(r);}catch(e){apps=[];}onBothLoaded();});
+  sget(SKA,function(r){try{if(r){apps=JSON.parse(r);apps.forEach(function(a){if(a.camdenLog!==undefined&&a.voxLog===undefined){a.voxLog=a.camdenLog;delete a.camdenLog;}if(a.lastCamdenSync!==undefined&&a.lastVoxSync===undefined){a.lastVoxSync=a.lastCamdenSync;delete a.lastCamdenSync;}});}}catch(e){apps=[];}onBothLoaded();});
   sget(SKP,function(r){try{if(r) profile=Object.assign({},DEF,JSON.parse(r));}catch(e){}onBothLoaded();});
 }
 function saveApps(){sset(SKA,JSON.stringify(apps));refresh();popSelects();}
@@ -768,7 +774,7 @@ function dSince(ds){if(!ds) return null;return Math.floor((Date.now()-new Date(d
 
 function esc(t){if(!t) return '';return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-var PARK_VERSION='veritas_v1_2';
+var VERITAS_VERSION='veritas_v1_3';
 var safeMD=boldMD;
 function truncStr(s,n){if(!s) return '';return s.length>n?s.slice(0,n)+'...':s;}
 
@@ -807,17 +813,17 @@ function buildEvalPrompt(){
   t+='- When a JD uses terms like "agentic workflows", "AI prototypes", "LLM integration", or "AI adoption" in a People/HR/TA context, treat this as a strong domain match for a candidate who has built AI tooling on the Claude API and led AI-enabled workflow automation.\n';
   t+='- A score in the 40s for a TA/People Ops/AI Transformation role is almost certainly a scoring error. Re-read the JD carefully before assigning domain_fit below 15.\n';
   t+='- Use the candidate name from their profile in all outputs, not generic phrases like "the candidate".\n\n';
-  t+='LOCATION: '+(p.location||'Your City')+' — always use Zone 1 or highest compensation tier. Never comment on zone unless comp is genuinely below the floor.\n';
+  t+='LOCATION: '+(p.location||'Your City')+' — always use Zone 1 or highest compensation tier. Never comment on zone unless estimated total comp is genuinely below the floor.\n';
   t+='CURRENT: '+(p.current||'Not specified')+'\n';
   if(p.prevRoles) t+='\nBACKGROUND:\n'+truncStr(p.prevRoles,800)+'\n';
   if(p.summary) t+=truncStr(p.summary,600)+'\n';
-  t+='\nLocation: '+(p.location||'Your City')+' — use this to select the correct geographic comp tier when multiple tiers are listed in the JD.\nWork preference: '+(p.workModel||'remote preferred')+'\nTarget level: '+(p.level||'senior')+'\nRole type: '+(p.roleType||'both IC and People Manager')+'\nComp floor: '+(p.compFloor||'')+' base minimum. Target: '+(p.compTarget||'')+'.\n';
+  t+='\nLocation: '+(p.location||'Your City')+' — use this to select the correct geographic comp tier when multiple tiers are listed in the JD.\nWork preference: '+(p.workModel||'remote preferred')+'\nTarget level: '+(p.level||'senior')+'\nRole type: '+(p.roleType||'both IC and People Manager')+'\nComp floor: '+(p.compFloor||'')+' TOTAL COMP minimum (all-in: base + bonus + annualized equity + benefits value). Target: '+(p.compTarget||'')+'.\nCOMP EVALUATION RULE: The floor above is TOTAL annual comp, not base. Do not compare the JD base alone against it. Estimate total comp = base + expected bonus + annualized equity + ~4% of base if 401k match exists. For PRIVATE companies, apply a liquidity haircut to equity before counting it: late-stage private multiply equity by 0.6, early-stage by 0.35, public by 1.0. A role with a base below the floor can still CLEAR the floor on total comp (e.g. lower base offset by bonus and equity), and a high all-cash base with no bonus or equity may only barely clear it. Flag the certainty tradeoff when equity is a large share of total.\n';
   if(p.equity==='yes') t+='Equity required.\n';
   if(p.strengths){t+='\nCORE STRENGTHS:\n'+truncStr(p.strengths,2000)+'\n';}
   if(p.gaps){t+='\nHONEST GAPS:\n'+truncStr(p.gaps,600)+'\n';}
   if(p.dealBreakers){t+='\nDEAL BREAKERS:\n';p.dealBreakers.split('\n').forEach(function(d){if(d.trim()) t+='- '+d.trim()+'\n';});}
   if(p.targetCos){t+='\nTARGET COMPANIES:\n';p.targetCos.split('\n').forEach(function(c){if(c.trim()) t+='- '+c.trim()+'\n';});}
-  t+='\nPRIORITIES:\n1. Career fit\'s trajectory?\n2. Growth potential\n3. Cultural signal\n4. Comp fit\n\nINSIGHTS: Bold key terms. Career fit first. Be specific.\n\nCOMP NOTE: Only if informative.\n\nRespond ONLY with valid JSON, no markdown:\n{"score":NUMBER,"verdict":"Strong Yes or Yes or Maybe or Pass","company":"NAME","role":"TITLE","summary":"2-3 sentences on career fit","strengths":["**skill**: detail","...","...","..."],"gaps":["**gap**: detail","...","..."],"comp_range":"salary range from JD. Use SF Bay Area tier if multiple listed. Format $X-$Y or Unknown.","comp_flag":"Within range or Below floor or Above target or Unknown — evaluate against the SF Bay Area tier if multiple tiers exist","comp_note":"1 sentence if informative","recommendation":"2-3 sentences. State the call with reason.","career_insight":"1-2 sentences on how this role could advance the candidate\'s trajectory","culture_fit":"1 sentence on cultural fit","domain_fit":NUMBER_0_TO_25,"domain_fit_note":"1 sentence","growth_signal":NUMBER_0_TO_25,"growth_signal_note":"1 sentence","culture_signal":NUMBER_0_TO_25,"culture_signal_note":"1 sentence","comp_logistics":NUMBER_0_TO_25,"comp_logistics_note":"1 sentence"}\n\n\n\nSUB-SCORES (each 0-25, must sum to overall score): domain_fit=background vs requirements. growth_signal=scope/skill expansion. culture_signal=JD language vs operating style. comp_logistics=comp/level/work model fit.';
+  t+='\nPRIORITIES:\n1. Career fit\'s trajectory?\n2. Growth potential\n3. Cultural signal\n4. Comp fit\n\nINSIGHTS: Bold key terms. Career fit first. Be specific.\n\nCOMP NOTE: Only if informative.\n\nRespond ONLY with valid JSON, no markdown:\n{"score":NUMBER,"verdict":"Strong Yes or Yes or Maybe or Pass","company":"NAME","role":"TITLE","summary":"2-3 sentences on career fit","strengths":["**skill**: detail","...","...","..."],"gaps":["**gap**: detail","...","..."],"comp_range":"salary range from JD. Use SF Bay Area tier if multiple listed. Format $X-$Y or Unknown.","comp_flag":"Within range or Below floor or Above target or Unknown — evaluate ESTIMATED TOTAL COMP (base + bonus + haircut-adjusted equity + benefits) against the total-comp floor, NOT base alone. Use SF Bay Area tier if multiple exist","comp_note":"1 sentence if informative. If equity is a large share of total, note the cash-certainty tradeoff.","recommendation":"2-3 sentences. State the call with reason.","career_insight":"1-2 sentences on how this role could advance the candidate\'s trajectory","culture_fit":"1 sentence on cultural fit","domain_fit":NUMBER_0_TO_25,"domain_fit_note":"1 sentence","growth_signal":NUMBER_0_TO_25,"growth_signal_note":"1 sentence","culture_signal":NUMBER_0_TO_25,"culture_signal_note":"1 sentence","comp_logistics":NUMBER_0_TO_25,"comp_logistics_note":"1 sentence"}\n\n\n\nSUB-SCORES (each 0-25, must sum to overall score): domain_fit=background vs requirements. growth_signal=scope/skill expansion. culture_signal=JD language vs operating style. comp_logistics=total-comp (not base) vs floor / level / work model fit. A base below floor still scores well if estimated total comp clears the floor; an all-cash base barely above floor with no upside is not a top score.';
 ;
   return t;
 }
@@ -928,7 +934,7 @@ function renderDossierShell(d){
   h+='<div class="sbn" style="gap:8px;margin-bottom:20px"><p>Your call.</p><div style="display:flex;gap:6px;flex-wrap:wrap">';
   h+='<button class="btn bp" style="padding:6px 12px;font-size:0.74rem" onclick="proceedFromEval()">Proceed →</button>';
   h+='<button class="btn bg" style="padding:6px 12px;font-size:0.74rem" onclick="passFromEval()">Pass</button>';
-  h+='<button class="btn ba" style="padding:6px 12px;font-size:0.74rem" onclick="generateCamdenBriefing()">→ Vox</button>';
+  h+='<button class="btn ba" style="padding:6px 12px;font-size:0.74rem" onclick="generateVoxBriefing()">→ Vox</button>';
   h+='</div></div>';
   h+='<div style="font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);margin-bottom:10px">Company Intelligence</div>';
   h+='<div id="intelOut"><div style="background:var(--bg1);border:1px solid var(--border);border-radius:10px;padding:14px 16px">';
@@ -1125,7 +1131,7 @@ async function fetchIntelInto(company,role,depthMode,modelChoice,triggerBtn){
 
 
 
-function generateCamdenBriefing(){
+function generateVoxBriefing(){
   var today=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   var active=apps.filter(function(a){return a.status!=='closed'&&['rejected','archived','passed'].indexOf(a.stage)===-1;});
   var closed=apps.filter(function(a){return a.status==='closed'||['rejected','archived','passed'].indexOf(a.stage)!==-1;});
@@ -1140,7 +1146,7 @@ function generateCamdenBriefing(){
   var lines=[];
   lines.push('# Vox Pipeline Briefing');
   lines.push('**Generated:** '+today);
-  lines.push('**Source:** Veritas '+PARK_VERSION);
+  lines.push('**Source:** Veritas '+VERITAS_VERSION);
   lines.push('');
 
   // Active pipeline
@@ -1518,7 +1524,7 @@ function renderTracker(){
       if(app.dateApplied) h+='<span class="ad">'+app.dateApplied+'</span>';
       h+='</div>';
       h+='<div style="margin-top:8px;pointer-events:auto" onclick="event.stopPropagation()">';
-      h+='<button class="btn ba" style="width:100%;font-size:0.7rem;font-weight:600;justify-content:center;padding:5px 10px" onclick="openInCamden(\''+app.id+'\')">Open in Vox →</button>';
+      h+='<button class="btn ba" style="width:100%;font-size:0.7rem;font-weight:600;justify-content:center;padding:5px 10px" onclick="openInVox(\''+app.id+'\')">Open in Vox →</button>';
       h+='</div>';
       h+='</div>';
     }
@@ -1527,25 +1533,25 @@ function renderTracker(){
 }
 
 
-function openCamdenSync(){
-  var m=document.getElementById('camdenSyncModal');
+function openVoxSync(){
+  var m=document.getElementById('voxSyncModal');
   if(m) m.classList.add('open');
-  var inp=document.getElementById('camdenSyncInput');
+  var inp=document.getElementById('voxSyncInput');
   if(inp){inp.value='';inp.focus();}
-  var prev=document.getElementById('camdenSyncPreview');
+  var prev=document.getElementById('voxSyncPreview');
   if(prev) prev.style.display='none';
-  var msg=document.getElementById('camdenSyncMsg');
+  var msg=document.getElementById('voxSyncMsg');
   if(msg) msg.innerHTML='';
 }
 
-function closeCamdenSync(){
-  var m=document.getElementById('camdenSyncModal');
+function closeVoxSync(){
+  var m=document.getElementById('voxSyncModal');
   if(m) m.classList.remove('open');
 }
 
-function parseParkUpdate(text){
-  // Parse structured block from Camden
-  // Accepts both "PARK UPDATE\nCompany: X" and loose key: value format
+function parseVoxUpdate(text){
+  // Parse structured block from Vox
+  // Reads any "Key: value" lines; header line is ignored, so old and new block formats both parse
   var result={};
   var lines=text.split('\n');
   lines.forEach(function(line){
@@ -1558,15 +1564,15 @@ function parseParkUpdate(text){
   return result;
 }
 
-function applyCamdenSync(){
-  var inp=document.getElementById('camdenSyncInput');
-  var msg=document.getElementById('camdenSyncMsg');
-  var prev=document.getElementById('camdenSyncPreview');
+function applyVoxSync(){
+  var inp=document.getElementById('voxSyncInput');
+  var msg=document.getElementById('voxSyncMsg');
+  var prev=document.getElementById('voxSyncPreview');
   if(!inp||!inp.value.trim()){
-    if(msg) msg.innerHTML='<div class="eb">Paste a Park update block first.</div>';
+    if(msg) msg.innerHTML='<div class="eb">Paste a Vox update block first.</div>';
     return;
   }
-  var parsed=parseParkUpdate(inp.value);
+  var parsed=parseVoxUpdate(inp.value);
   var company=parsed.company||'';
   if(!company){
     if(msg) msg.innerHTML='<div class="eb">Could not find a Company field. Make sure the update includes "Company: [name]".</div>';
@@ -1600,11 +1606,11 @@ function applyCamdenSync(){
   if(parsed.energy) logEntry+=' | Energy: '+parsed.energy;
   if(parsed.next_action) logEntry+=' | Next: '+parsed.next_action;
   if(parsed.notes) logEntry+='\n'+parsed.notes;
-  match.camdenLog=(match.camdenLog?match.camdenLog+'\n\n':'')+logEntry;
+  match.voxLog=(match.voxLog?match.voxLog+'\n\n':'')+logEntry;
   if(parsed.energy) match.energy=parsed.energy;
   if(parsed.next_action) match.nextAction=parsed.next_action;
   match.lastContact=today;
-  match.lastCamdenSync=today;
+  match.lastVoxSync=today;
   saveApps();
   // Show confirmation
   if(prev){
@@ -1617,10 +1623,10 @@ function applyCamdenSync(){
   }
   if(msg) msg.innerHTML='<div class="sb2" style="margin-bottom:10px">Synced. Record updated.</div>';
   inp.value='';
-  setTimeout(function(){closeCamdenSync();},2000);
+  setTimeout(function(){closeVoxSync();},2000);
 }
 
-function openInCamden(id){
+function openInVox(id){
   var app=apps.find(function(a){return a.id===id;});
   if(!app) return;
   var today=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
@@ -1658,7 +1664,7 @@ function openInCamden(id){
   lines.push('*When you\'re done, ask Vox: "Give me a Veritas update for '+app.company+'"*');
   lines.push('*The update should include: stage, notes, energy (High/Medium/Low), next action.*');
   var text=lines.join('\n');
-  // Copy to clipboard then open Camden
+  // Copy to clipboard then open Vox
   navigator.clipboard.writeText(text).then(function(){
     window.open('https://claude.ai','_blank');
     // Show confirmation toast
@@ -1957,7 +1963,7 @@ function renderDash(){
 }
 
 function clearModal(){
-  ['mCo','mRole','mURL','mRec','mRef','mComp','mScore','mRej','mNotes','mCamdenLog','mFBo','mFBi','mFBs','mLvl'].forEach(function(id){var el=document.getElementById(id);if(el) el.value='';});
+  ['mCo','mRole','mURL','mRec','mRef','mComp','mScore','mRej','mNotes','mVoxLog','mFBo','mFBi','mFBs','mLvl'].forEach(function(id){var el=document.getElementById(id);if(el) el.value='';});
   document.getElementById('mStage').value='applied';document.getElementById('mATS').value='unknown';
   document.getElementById('mSrc').value='linkedin';document.getElementById('mRes').value='general';
   document.getElementById('mCL').value='none';document.getElementById('mWork').value='unknown';
@@ -2066,7 +2072,7 @@ function openEdit(id){
   document.getElementById('mRef').value=a.referral||'';document.getElementById('mWork').value=a.workModel||'unknown';
   document.getElementById('mType').value=a.type||'IC';document.getElementById('mLvl').value=a.level||'';
   document.getElementById('mRej').value=a.rejectReason||'';document.getElementById('mNotes').value=a.notes||'';
-  document.getElementById('mCamdenLog').value=a.camdenLog||'';
+  document.getElementById('mVoxLog').value=a.voxLog||'';
   document.getElementById('mFBo').value=a.feedbackOfficial||'';document.getElementById('mFBi').value=a.feedbackInside||'';
   document.getElementById('mFBs').value=a.feedbackSelf||'';
   var isAppClosed=(a.status==='closed'||['rejected','archived','passed'].indexOf(a.stage)!==-1);
@@ -2083,7 +2089,7 @@ function saveApp(){
   if(!editId){var dupes=apps.filter(function(a){return a.company.toLowerCase()===co.toLowerCase()&&a.role.toLowerCase()===role.toLowerCase();});if(dupes.length){if(!confirm(co+' — '+role+' already exists. Add anyway?')) return;}}
   var tags=[];document.querySelectorAll('.ft.on').forEach(function(t){tags.push(t.dataset.tag);});
   var existing=editId?apps.find(function(a){return a.id===editId;}):null;
-  var a={id:editId||Date.now().toString(),company:co,role:role,url:document.getElementById('mURL').value.trim(),stage:document.getElementById('mStage').value,ats:document.getElementById('mATS').value,dateApplied:document.getElementById('mDate').value,lastContact:document.getElementById('mCont').value,comp:document.getElementById('mComp').value.trim(),score:document.getElementById('mScore').value.trim(),recruiter:document.getElementById('mRec').value.trim(),source:document.getElementById('mSrc').value,resume:document.getElementById('mRes').value,coverLetter:document.getElementById('mCL').value,referral:document.getElementById('mRef').value.trim(),workModel:document.getElementById('mWork').value,type:document.getElementById('mType').value,level:document.getElementById('mLvl').value.trim(),rejectReason:document.getElementById('mRej').value.trim(),status:document.getElementById('mStatus').value||'active',furthestStage:document.getElementById('mFurthest').value||'',outcome:document.getElementById('mOutcome').value||'rejected',notes:document.getElementById('mNotes').value.trim(),feedbackOfficial:document.getElementById('mFBo').value.trim(),feedbackInside:document.getElementById('mFBi').value.trim(),feedbackSelf:document.getElementById('mFBs').value.trim(),feedbackTags:tags,camdenLog:existing?existing.camdenLog||'':'',checklist:existing?existing.checklist||{}:{}};
+  var a={id:editId||Date.now().toString(),company:co,role:role,url:document.getElementById('mURL').value.trim(),stage:document.getElementById('mStage').value,ats:document.getElementById('mATS').value,dateApplied:document.getElementById('mDate').value,lastContact:document.getElementById('mCont').value,comp:document.getElementById('mComp').value.trim(),score:document.getElementById('mScore').value.trim(),recruiter:document.getElementById('mRec').value.trim(),source:document.getElementById('mSrc').value,resume:document.getElementById('mRes').value,coverLetter:document.getElementById('mCL').value,referral:document.getElementById('mRef').value.trim(),workModel:document.getElementById('mWork').value,type:document.getElementById('mType').value,level:document.getElementById('mLvl').value.trim(),rejectReason:document.getElementById('mRej').value.trim(),status:document.getElementById('mStatus').value||'active',furthestStage:document.getElementById('mFurthest').value||'',outcome:document.getElementById('mOutcome').value||'rejected',notes:document.getElementById('mNotes').value.trim(),feedbackOfficial:document.getElementById('mFBo').value.trim(),feedbackInside:document.getElementById('mFBi').value.trim(),feedbackSelf:document.getElementById('mFBs').value.trim(),feedbackTags:tags,voxLog:existing?existing.voxLog||'':'',checklist:existing?existing.checklist||{}:{}};
   if(editId){var idx=apps.findIndex(function(x){return x.id===editId;});if(idx!==-1) apps[idx]=a;}else{apps.unshift(a);}
   saveApps();closeModal();
 }
@@ -2119,99 +2125,6 @@ document.addEventListener('mouseout', function(e) {
     if(tip) tip.remove();
   }
 });
-
-// ── DEMO MODE ──────────────────────────────────────────────────────────────
-var DEMO_APPS = [
-  {id:'demo-1',company:'Skyline Health',role:'Head of People Analytics & Workforce Intelligence',stage:'hm-screen',status:'active',score:'88',comp:'$240,000 – $280,000',source:'linkedin',referral:'',recruiter:'Jamie Osei',dateApplied:'2026-05-20',lastContact:'2026-06-02',workModel:'remote',roleType:'People Manager',level:'VP',notes:'Strong call with recruiter. HM screen scheduled.',resumeVersion:'general',coverLetter:'yes',feedbackTags:[]},
-  {id:'demo-2',company:'Fathom Analytics',role:'Director, TA Operations & AI Enablement',stage:'interview',status:'active',score:'81',comp:'$230,000 – $255,000',source:'referral',referral:'Dana Park',recruiter:'Chris Navarro',dateApplied:'2026-05-12',lastContact:'2026-05-30',workModel:'remote',roleType:'People Manager',level:'Director',notes:'Panel interview week of June 9. Strong referral from Dana.',resumeVersion:'general',coverLetter:'yes',feedbackTags:[]},
-  {id:'demo-3',company:'Northgate Insurance',role:'VP, Workforce Intelligence',stage:'screen',status:'active',score:'74',comp:'$210,000 – $235,000',source:'linkedin',referral:'',recruiter:'Priya Mehta',dateApplied:'2026-05-28',lastContact:'2026-05-28',workModel:'hybrid',roleType:'People Manager',level:'VP',notes:'Recruiter screen scheduled for June 6.',resumeVersion:'general',coverLetter:'none',feedbackTags:[]},
-  {id:'demo-4',company:'Cascade Robotics',role:'Senior PM, People Data Products',stage:'applied',status:'active',score:'77',comp:'$220,000 – $250,000',source:'direct',referral:'',recruiter:'',dateApplied:'2026-06-01',lastContact:'2026-06-01',workModel:'remote',roleType:'IC',level:'L7',notes:'Applied direct. No response yet.',resumeVersion:'general',coverLetter:'yes',feedbackTags:[]},
-  {id:'demo-5',company:'Meridian Bank',role:'Head of HR Analytics',stage:'applied',status:'active',score:'69',comp:'$195,000 – $220,000',source:'job-board',referral:'',recruiter:'',dateApplied:'2026-05-31',lastContact:'2026-05-31',workModel:'hybrid',roleType:'People Manager',level:'Director',notes:'Below comp floor but interesting scope. Monitoring.',resumeVersion:'general',coverLetter:'none',feedbackTags:[]},
-  {id:'demo-6',company:'Crestline Financial',role:'VP, Revenue Operations & GTM Analytics',stage:'rejected',status:'closed',score:'61',comp:'$185,000 – $215,000',source:'linkedin',referral:'',recruiter:'Tom Ricci',dateApplied:'2026-04-15',lastContact:'2026-05-01',workModel:'hybrid',roleType:'People Manager',level:'VP',outcome:'rejected',furthestStage:'screen',notes:'Domain mismatch — CRM/RevOps not a fit.',resumeVersion:'general',coverLetter:'none',feedbackTags:['domain-mismatch','comp-below-floor']},
-  {id:'demo-7',company:'Luminary Health',role:'Director, People Analytics',stage:'rejected',status:'closed',score:'79',comp:'$215,000 – $240,000',source:'referral',referral:'Alex Kim',recruiter:'Sarah Diaz',dateApplied:'2026-04-22',lastContact:'2026-05-10',workModel:'remote',roleType:'People Manager',level:'Director',outcome:'rejected',furthestStage:'hm-screen',notes:'Went with internal candidate.',resumeVersion:'general',coverLetter:'yes',feedbackTags:['internal-candidate','strong-interview']}
-];
-
-var DEMO_DATA = {
-  company: "Skyline Health",
-  role: "Head of People Analytics & Workforce Intelligence",
-  score: 88,
-  domain_fit: 23,
-  domain_fit_note: "Direct match — people data infrastructure, self-service analytics, and operating model design are the core of this role. Scale (12,000 employees across 40 sites) maps well to prior experience.",
-  growth_signal: 21,
-  growth_signal_note: "Series D health system on an acquisition path. Headcount expected to double within 24 months. Real scope expansion built into the trajectory.",
-  culture_signal: 22,
-  culture_signal_note: "JD language emphasizes 'first principles thinking' and 'building durable systems over quick fixes.' Matches operating style well. No red flags.",
-  comp_logistics: 22,
-  comp_logistics_note: "Posted $240–280K base + equity + bonus. Remote-first with quarterly travel. Comfortably above floor.",
-  verdict: "Strong Fit — Prioritize",
-  summary: "This role is a direct line from prior experience — people data infrastructure at scale, operating model design, and AI-native tooling strategy. The acquisition growth path means the function will need to scale faster than it can hire, which favors someone who has built self-service systems from scratch. The comp range and remote model are both right. Move quickly.",
-  strengths: [
-    "People data infrastructure at scale — owned 150+ dashboards and pipelines across an 80K+ employee org",
-    "Operating model redesign from institutional knowledge — introduced PM disciplines, intake frameworks, delivery standards",
-    "AI tooling strategy — practitioner-level fluency building directly on LLM APIs, not just configuring vendors",
-    "Self-service analytics — built systems that eliminated recurring analyst requests and democratized data access",
-    "Cross-functional influence without authority — led engineering, analytics, and TPM across two large orgs"
-  ],
-  gaps: [
-    "Healthcare regulatory context (HIPAA, workforce compliance reporting) is a new domain — ramp expected",
-    "Multi-site distributed workforce analytics differs from single-campus or fully remote org models"
-  ],
-  comp_raw: "$240,000 – $280,000",
-  comp_tier: "San Francisco",
-  comp_floor_match: true,
-  level_signal: "Director / VP equivalent",
-  work_model: "Remote-first, quarterly travel"
-};
-
-var DEMO_JD = "Head of People Analytics & Workforce Intelligence — Skyline Health\n\nSkyline is a Series D regional health system (12,000 employees, 40 sites) growing aggressively through acquisition. We need a Head of People Analytics to own our workforce data infrastructure, build self-service reporting for HR and operations leaders, and develop our AI-native people analytics roadmap. This is a build role — you'll design the operating model, select the stack, and lead a small cross-functional team.\n\nBase: $240,000 – $280,000 + equity + bonus. Remote-first with quarterly travel to regional sites.";
-
-function runDemo() {
-  var out = document.getElementById('evalOut');
-  var jdBox = document.getElementById('jdText');
-  var demoBtn = document.getElementById('demoBtn');
-
-  // Pre-fill JD textarea with sample so it looks like a real eval
-  if (jdBox) {
-    jdBox.value = DEMO_JD;
-    var cc = document.getElementById('jdcc');
-    if (cc) cc.textContent = DEMO_JD.length + ' characters';
-  }
-
-  // Show loading state briefly so it feels real
-  demoBtn.textContent = '⏳ Loading...';
-  demoBtn.disabled = true;
-
-  setTimeout(function() {
-    // Seed eval tab
-    lastEvalJD = DEMO_JD;
-    lastEvalCo = DEMO_DATA.company;
-    lastEvalRole = DEMO_DATA.role;
-    lastEvalData = DEMO_DATA;
-    lastEvalATS = 'ashby';
-    lastEvalURL = '';
-    renderDossierShell(DEMO_DATA);
-
-    // Seed tracker, dashboard, closed — only if no real data exists
-    if (apps.length === 0) {
-      apps = DEMO_APPS.slice();
-      refresh();
-    }
-
-    // Demo banner above eval result
-    var banner = document.getElementById('demoBanner');
-    if (!banner) {
-      banner = document.createElement('div');
-      banner.id = 'demoBanner';
-      banner.style.cssText = 'background:var(--green-dim);border:1px solid var(--aborder);border-radius:8px;padding:9px 14px;font-size:0.74rem;color:var(--green);margin-bottom:12px;display:flex;align-items:center;gap:8px;';
-      banner.innerHTML = '<span style="font-size:1rem">▶</span><span><strong>Demo mode</strong> — sample pipeline loaded across all tabs. No API key required. <a href="https://github.com/itworkssly/veritas" target="_blank" style="color:var(--green);text-decoration:underline;margin-left:6px;">View on GitHub →</a></span>';
-      if (out.parentNode) out.parentNode.insertBefore(banner, out);
-    }
-
-    demoBtn.textContent = '▶ Demo';
-    demoBtn.disabled = false;
-  }, 800);
-}
-// ── END DEMO MODE ──────────────────────────────────────────────────────────
 </script>
 
 <div id="defaultProfile" data-profile="{&quot;name&quot;: &quot;&quot;, &quot;location&quot;: &quot;&quot;, &quot;title&quot;: &quot;&quot;, &quot;current&quot;: &quot;&quot;, &quot;summary&quot;: &quot;&quot;, &quot;prevRoles&quot;: &quot;&quot;, &quot;compFloor&quot;: &quot;&quot;, &quot;compTarget&quot;: &quot;&quot;, &quot;level&quot;: &quot;&quot;, &quot;workModel&quot;: &quot;remote preferred&quot;, &quot;equity&quot;: &quot;yes&quot;, &quot;roleType&quot;: &quot;both&quot;, &quot;dealBreakers&quot;: &quot;&quot;, &quot;targetCos&quot;: &quot;&quot;, &quot;strengths&quot;: &quot;&quot;, &quot;gaps&quot;: &quot;&quot;, &quot;voice&quot;: &quot;&quot;, &quot;samples&quot;: &quot;&quot;, &quot;avoid&quot;: &quot;&quot;}" style="display:none"></div>
