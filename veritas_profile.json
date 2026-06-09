@@ -1,0 +1,21 @@
+{
+  "name": "Michael Strylowski",
+  "location": "San Francisco, CA",
+  "title": "People Operations & Analytics Strategist",
+  "current": "Principal Program Manager, Talent Acquisition Data at Atlassian (Jan 2025 - Mar 2026)",
+  "summary": "Over a decade building TA data infrastructure, operating models, and analytics ecosystems for some of the largest technology companies in the world. Known for turning fragmented, manual processes into governed, self-service systems. Built the TA analytics function at Facebook from zero. Currently building AI agents and automation on the Claude API.",
+  "prevRoles": "Head of Recruiting Data Solutions, People Analytics - Meta (May 2020 - Nov 2024)\nRecruiting Insights Manager, People Analytics - Facebook (Oct 2017 - May 2020)\nRecruiting Insights Analyst - Facebook (Mar 2013 - Oct 2017)",
+  "compFloor": "$225,000",
+  "compTarget": "$225K - $300K",
+  "level": "L6/7/8 depending on company",
+  "workModel": "remote preferred",
+  "equity": "yes",
+  "roleType": "both",
+  "dealBreakers": "Roles below $200K base\nRequires relocation\nNo equity offered\nWeapons manufacturers\nPolitically partisan organizations\nTravel more than 25%",
+  "targetCos": "GitHub\nBetterUp\nWaymo\nHims & Hers\nAnduril",
+  "strengths": "Built TA analytics from 0 to 1 at Facebook as the first embedded analyst when headcount was 6,000 and scaled to 50,000\nMeta: owned recruiting data infrastructure for 80,000 employees globally, built 150+ Tableau dashboards covering headcount pacing, demand analysis, time-to-fill, time-to-start, funnel health, and team performance\nDesigned semantic layer with Data Engineering standardizing recruiting data org-wide, eliminating metric discrepancies across Finance, Recruiting, and HR\nBuilt PERM immigration compliance reporting infrastructure at Meta\nLed GDPR implementation for recruiting data during period of significant regulatory scrutiny at Meta\nServed on Databricks model validation team at Meta, validating AI outputs against owned dashboards\nPartnered with Finance and HR on headcount reconciliation, taxonomy alignment, and position data integrity for 80,000 employees\nIncreased data accessibility 35% through self-service dashboards at Meta\n50,000 weekly interviews shifted fully remote during COVID with no operational loss\nAt Atlassian: served as single accountable PM for the full TA data and systems ecosystem\nBuilt Hiring Quest gamified pilot achieving 100% adoption across recruiting and sourcing pods in one quarter\nDesigned and shipped AI agent workflows on Claude API saving 8 hours per week normally, 20-40 hours during performance review cycles\nBuilt working AI job search intelligence system on Claude API: fit scoring, cover letter generation, web search, pipeline tracking\nDiscovered and resolved critical data quality gaps in Atlassian interviewing dataset\nBuilt 4 persona-driven Tableau dashboards from scratch at Atlassian reducing ad hoc reporting 20-30%\nDesigned TA support operating model in Jira using Atlassian Intelligence for automated ticket routing\nPeople leadership: managed teams of 6-32 across TPMs, engineers, and analysts; 7 direct reports transferred to dream roles\nCross-functional alignment with Legal, Finance, Engineering, and People Analytics at both Meta and Atlassian\nAI fluency: Claude API, LLM APIs, agent frameworks, RAG, prompt engineering, agentic workflow design",
+  "gaps": "No Workday hands-on configuration (adjacent through headcount reconciliation and compliance work)\nNo HiBob, UKG, or Paylocity direct experience\nNo DevRel or developer community management\nNo OD or management consulting background\nNo Ashby ATS direct experience\nBenefits administration not a core strength\nCompensation cycle administration not owned directly",
+  "voice": "Direct and confident. Leads with something specific and real. References actual work, actual scale, actual outcomes. Never overclaims. Short paragraphs. No corporate speak. No em dashes. Closes clean.",
+  "samples": "I have spent fifteen years building the operational infrastructure that turns headcount targets into execution.",
+  "avoid": "Em dashes, leveraged, spearheaded, synergy, thought leader, passionate, stakeholders, results-driven, dynamic, innovative, AI-sounding phrasing, corporate filler phrases"
+}
