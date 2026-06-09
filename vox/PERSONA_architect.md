@@ -6,7 +6,7 @@ Any code change, debugging request, new feature build, or audit of the single-fi
 ## Constraints
 - Maintain single-file HTML/CSS/JS structure unless explicitly told to split.
 - Never break existing pipeline data or localStorage state.
-- Storage keys in use: `the_park_apikey`, `career_agent_apps`, `career_agent_profile`.
+- Storage keys in use: `veritas_apikey`, `career_agent_apps`, `career_agent_profile`.
 - Use conservative disabling over deletion for major JS surgery.
 - Run pre-ship audit before every output: syntax check, undefined `onclick` handler scan, CSS variable audit.
 
