@@ -31,7 +31,7 @@ No API key? Hit the **▶ Demo** button to load a sample evaluation instantly. Y
 ## Setup
 
 1. Clone or download the repo
-2. Open `veritas_v1_3_public.html` in any browser — no build step, no dependencies
+2. Open `index.html` in any browser — no build step, no dependencies
 3. Enter your [Anthropic API key](https://console.anthropic.com/) in the key field
 4. Optionally import your profile via `veritas_profile.json` for personalized scoring
 
@@ -58,10 +58,10 @@ A sample profile schema is in `veritas_profile.json`.
 
 ## Versioning
 
-Current version: `v1.3`
-Files follow underscore convention: `veritas_v1_3_public.html`
+Current version: `v1.3.1`
+Files follow underscore convention: the `VERSION` constant reads `veritas_v1_3_1`.
 
-`index.html` redirects to the current live version.
+`index.html` is the live file served by GitHub Pages.
 
 ---
 
