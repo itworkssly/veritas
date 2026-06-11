@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Veritas v1_3</title>
+<title>Veritas v1_3_1</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23111316%22/><rect x=%2216%22 y=%2264%22 width=%2212%22 height=%2222%22 rx=%222%22 fill=%22%2300D4A1%22 opacity=%220.4%22/><rect x=%2232%22 y=%2252%22 width=%2212%22 height=%2234%22 rx=%222%22 fill=%22%2300D4A1%22 opacity=%220.65%22/><rect x=%2248%22 y=%2238%22 width=%2212%22 height=%2248%22 rx=%222%22 fill=%22%2300D4A1%22 opacity=%220.85%22/><rect x=%2264%22 y=%2222%22 width=%2212%22 height=%2264%22 rx=%222%22 fill=%22%2300D4A1%22/></svg>">
 
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -392,8 +392,8 @@ textarea.plain:focus{border-color:rgba(0,212,161,0.3);}
       <p class="ps">Everything you have touched. Click to edit, shift-click to compare.</p>
       <div id="whatsNew" style="background:var(--green-dim);border:1px solid var(--aborder);border-radius:8px;padding:11px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:12px">
         <div style="flex:1">
-          <div style="font-size:0.7rem;font-weight:700;color:var(--green);letter-spacing:0.03em;text-transform:uppercase;margin-bottom:3px">What&#39;s new &middot; v1_3</div>
-          <div style="font-size:0.8rem;color:var(--ink2);line-height:1.45">Comp scoring now uses estimated <strong style="color:var(--ink)">total comp</strong> against your floor, not base alone. Bonus, equity, and benefits count; private equity gets a liquidity haircut. Existing scores keep their old numbers. Re-run a role to apply the new logic. Chime and BetterUp are the two worth re-running first.</div>
+          <div style="font-size:0.7rem;font-weight:700;color:var(--green);letter-spacing:0.03em;text-transform:uppercase;margin-bottom:3px">What&#39;s new &middot; v1_3_1</div>
+          <div style="font-size:0.8rem;color:var(--ink2);line-height:1.45">Fixed a tracker bug. A role you closed through the status dropdown stayed visible as active if its stage was still an open value. Closed roles now drop out of the active tracker and show under Closed, matching the dashboard and funnel.</div>
         </div>
         <button onclick="document.getElementById('whatsNew').style.display='none'" style="background:none;border:none;color:var(--ink3);font-size:1.1rem;line-height:1;cursor:pointer;padding:0 2px;flex-shrink:0" aria-label="Dismiss">&times;</button>
       </div>
@@ -774,7 +774,7 @@ function dSince(ds){if(!ds) return null;return Math.floor((Date.now()-new Date(d
 
 function esc(t){if(!t) return '';return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-var VERITAS_VERSION='veritas_v1_3';
+var VERITAS_VERSION='veritas_v1_3_1';
 var safeMD=boldMD;
 function truncStr(s,n){if(!s) return '';return s.length>n?s.slice(0,n)+'...':s;}
 
@@ -1427,9 +1427,8 @@ function updateBulkBar(){
 
 function _getFilteredApps(){
   var search=(document.getElementById('trkSearch')?document.getElementById('trkSearch').value:'').toLowerCase();
-  var closedStages=['rejected','archived'];
   return apps.filter(function(a){
-    if(closedStages.indexOf(a.stage)!==-1) return false;
+    if(a.status==='closed'||['rejected','archived','passed'].indexOf(a.stage)!==-1) return false;
     if(activeFilter==='all'){
       if(search&&a.company.toLowerCase().indexOf(search)===-1&&a.role.toLowerCase().indexOf(search)===-1) return false;
       return true;
