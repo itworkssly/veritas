@@ -41,9 +41,7 @@ Single-file app. Runs entirely in the browser.
 
 ## Profile
 
-Veritas scores roles against a candidate profile — your background, comp floor, work model preferences, target companies, and deal breakers. Load yours via **Settings → Import Profile** or build it manually in the UI.
-
-A sample profile schema is in `veritas_profile.json`.
+Veritas scores roles against a candidate profile: background, comp parameters, work model preferences, target companies, and deal breakers. Load yours via **Settings → Import Profile** or build it manually in the UI. Keep your real, filled-in profile private; the `veritas_profile.json` in this repo is an example template with placeholder data.
 
 ---
 
