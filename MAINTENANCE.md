@@ -38,6 +38,7 @@ Patch releases (bugfix, refactor) increment the third number. Update all three s
 
 ## 6. Push and reconcile README
 
+- **Privacy check first.** Before pushing any `vox/` file or `veritas_profile.json`, confirm it contains no real pipeline, comp figures, or names of people. The public repo versions are templates with placeholder data. Your real, filled-in files live in your private workspace and Google Drive only. Never push a working copy over a template.
 - Push `index.html` with a descriptive commit message.
 - Update the README version line and the `VERSION` constant reference to match.
 - Push the README.
