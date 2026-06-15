@@ -58,8 +58,8 @@ A sample profile schema is in `veritas_profile.json`.
 
 ## Versioning
 
-Current version: `v1.3.2`
-Files follow underscore convention: the `VERSION` constant reads `veritas_v1_3_2`.
+Current version: `v1.3.3`
+Files follow underscore convention: the `VERSION` constant reads `veritas_v1_3_3`.
 
 `index.html` is the live file served by GitHub Pages.
 
