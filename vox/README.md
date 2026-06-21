@@ -108,7 +108,7 @@ One message. One complete prep package.
   STYLE_GUIDE.md             ← writing rules enforced on every output
   WORKFLOW_updated.md        ← step-by-step workflows for cover letters and JD analysis
   veritas_profile.json       ← your Veritas profile (optional, keeps tools in sync)
-  PERSONA_*.md               ← 12 specialist persona files (see list below)
+  PERSONA_*.md               ← 21 specialist persona files (see list below)
 ```
 
 ### Persona Files
@@ -116,6 +116,7 @@ One message. One complete prep package.
 | File | Role |
 |---|---|
 | `PERSONA_architect.md` | Code integrity, single-file structure, state management |
+| `PERSONA_delivery_lead.md` | Veritas build decisions, cross-session codebase state, dev-vs-prep triage |
 | `PERSONA_copy_editor.md` | All written assets, anti-AI voice enforcement |
 | `PERSONA_recruiter.md` | Resume-JD alignment, pipeline state, screening scorecard |
 | `PERSONA_hiring_manager.md` | Pain-point diagnostics, 90-day deliverable framing |
@@ -127,6 +128,14 @@ One message. One complete prep package.
 | `PERSONA_networking_maven.md` | Cold outreach, backchannel targeting |
 | `PERSONA_pm_advocate.md` | PM positioning, ROI framing, resume bullet rewrites |
 | `PERSONA_telemetry.md` | Funnel health, conversion diagnostics, JS analytics logic |
+| `PERSONA_ai_builder.md` | AI-native positioning, framing Veritas as proof of capability |
+| `PERSONA_comp_analyst.md` | Comp modeling from intake through offer |
+| `PERSONA_narrative_architect.md` | Career through-line, origin story, arc above the bullet |
+| `PERSONA_strategist.md` | Pipeline-wide time allocation across competing processes |
+| `PERSONA_skeptic.md` | Audits inputs a decision rests on before it locks |
+| `PERSONA_contrarian.md` | Argues the opposite side of a settled plan to surface blind spots |
+| `PERSONA_outsider.md` | Forces plans into plain English, names what the insider missed |
+| `PERSONA_expansionist.md` | Counterweight to playing small, questions the self-imposed ceiling |
 
 ---
 
