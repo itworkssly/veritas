@@ -4,13 +4,13 @@
 
 Vox is a Claude Project configured to support a job search at a senior level. It covers cover letter writing, resume editing, interview prep, outreach drafting, and pipeline strategy. The design pattern is replicable: anyone with a Claude account can follow these instructions and stand up the same setup.
 
-This README documents the architecture, file structure, and setup process. It pairs with [Veritas](https://itworkssly.github.io/veritas) — the AI-native job evaluation and pipeline tracking tool in this repo. Together, they form a two-tool job search intelligence system.
+This README documents the architecture, file structure, and setup process. It pairs with [Veritas](https://itworkssly.github.io/veritas), the AI-native job evaluation and pipeline tracking tool in this repo. Together, they form a two-tool job search intelligence system.
 
 ---
 
 ## What Vox Does
 
-Vox is a Claude Project — not a chat thread. The Project persists a system prompt and a set of uploaded reference files across every session. When you open it, context is already loaded. You start working immediately.
+Vox is a Claude Project, not a chat thread. The Project persists a system prompt and a set of uploaded reference files across every session. When you open it, context is already loaded. You start working immediately.
 
 **Vox handles:**
 - Cover letters, tailored to each role and styled as formatted `.docx` files
@@ -20,13 +20,13 @@ Vox is a Claude Project — not a chat thread. The Project persists a system pro
 - Pipeline strategy: how to frame a gap, manage competing offers, sequence outreach
 - LinkedIn content: posts, About sections, headlines
 
-The system prompt defines five specialist voices that activate based on the task — an Editor, a Publicist, a Creative Director, an industry Insider, and a Recruiter. You get one unified output, not a round-table discussion.
+The system prompt defines a panel of specialist personas that activate based on the task. A copy editor cuts the prose, a recruiter reads your materials the way a hiring manager would, a comp analyst models the numbers behind a negotiation. You get one unified output, not a transcript of the panel talking.
 
 ---
 
 ## How It Connects to Veritas
 
-Veritas evaluates roles and tracks a job search pipeline. When you want to bring that context into a writing or strategy session, Veritas generates a **Vox Pipeline Briefing** — a structured markdown block you copy and paste at the start of a Vox session. Vox reads it as the live source of truth for that session.
+Veritas evaluates roles and tracks a job search pipeline. When you want to bring that context into a writing or strategy session, Veritas generates a **Vox Pipeline Briefing**, a structured markdown block you copy and paste at the start of a Vox session. Vox reads it as the live source of truth for that session.
 
 The two tools share no data natively. The briefing is the handoff. You control what crosses.
 
@@ -36,15 +36,15 @@ The two tools share no data natively. The briefing is the handoff. You control w
 
 ## Why This Works
 
-Most AI-assisted job search setups fail for the same reason: the context resets every session. You paste your resume, describe your background, explain what you're looking for — and do it again the next day. The output is as generic as the input.
+Most AI-assisted job search setups fail for the same reason: the context resets every session. You paste your resume, describe your background, explain what you're looking for, then do it again the next day. The output is as generic as the input.
 
 Claude Projects solve this. A Project persists a system prompt and a set of uploaded files across every session. When you open Vox, it already knows your full career history, your target roles, your comp requirements, your voice, and your gaps. You start working immediately.
 
-**This design pattern is the entire point.** The intelligence lives in the reference files — `VOX_CONTEXT.md` in particular — not in the prompts you type. A well-built context file produces specific, usable outputs. A thin one produces polished noise that sounds like you could have written it about anyone.
+**This design pattern is the entire point.** The intelligence lives in the reference files, `VOX_CONTEXT.md` in particular, not in the prompts you type. A well-built context file produces specific, usable outputs. A thin one produces polished noise that sounds like you could have written it about anyone.
 
-The persona architecture matters too. A single AI assistant doing everything tends toward a competent middle. Vox activates specific specialist frames based on the task: an Editor who cuts aggressively, a Recruiter who reads your materials the way a hiring manager reads them, an Insider who knows what lands at FAANG-scale. You get one output, not a committee discussion — but the output has been pressure-tested by multiple lenses before it reaches you.
+The persona architecture matters too. A single AI assistant doing everything tends toward a competent middle. Vox activates specific specialist frames based on the task: an Editor who cuts aggressively, a Recruiter who reads your materials the way a hiring manager reads them, an Insider who knows what lands at FAANG-scale. You get one output, not a committee discussion. The output has been pressure-tested by multiple lenses before it reaches you.
 
-**Why not a custom GPT or a LangChain agent?** Custom GPTs have shallower context windows and no project-level file persistence. A LangChain agent introduces engineering complexity and runtime cost for a problem that doesn't need them — there's no external API to call, no database to query, no multi-step reasoning chain to orchestrate. The problem is context management and writing quality, and Claude Projects solve both natively. The simpler the architecture, the less that can break.
+**Why not a custom GPT or a LangChain agent?** Custom GPTs have shallower context windows and no project-level file persistence. A LangChain agent introduces engineering complexity and runtime cost for a problem that doesn't need them. There's no external API to call, no database to query, no multi-step reasoning chain to orchestrate. The problem is context management and writing quality, and Claude Projects solve both natively. The simpler the architecture, the less that can break.
 
 ---
 
@@ -56,7 +56,7 @@ The persona architecture matters too. A single AI assistant doing everything ten
 flowchart LR
     A[Personalize\nVOX_CONTEXT.md] --> B[Create Claude\nProject + upload files]
     B --> C[Open Vox]
-    C --> D[Paste Veritas\nbriefing — optional]
+    C --> D[Paste Veritas\nbriefing, optional]
     D --> E[State what\nyou need]
     E --> F[Full artifact\ndelivered]
     F --> G[Edit or\napprove]
@@ -68,7 +68,7 @@ A typical session looks like this:
 1. Open the Vox Project in Claude.
 2. If you want pipeline context, paste a Vox Pipeline Briefing generated from Veritas.
 3. State what you need. One sentence is usually enough: "Write a cover letter for this role" + paste the JD. Or: "Build me interview prep for GitHub, Head of People Analytics."
-4. Vox delivers the full artifact. Not an outline — the thing itself.
+4. Vox delivers the full artifact. Not an outline, the thing itself.
 5. Give feedback on specific sentences or sections. Iterate.
 6. Save to Google Drive if connected, or copy and use directly.
 
@@ -82,7 +82,7 @@ Here is a real exchange pattern for a cover letter, condensed:
 
 > **You:** Write a cover letter for this role. [paste JD]
 >
-> **Vox:** [delivers a full, styled cover letter in your voice, with a hook tied to the company's specific language, your most relevant employers and accomplishments in the bullets, and a clean close — no "I am excited to apply for this position"]
+> **Vox:** [delivers a full, styled cover letter in your voice, with a hook tied to the company's specific language, your most relevant employers and accomplishments in the bullets, and a clean close, with no "I am excited to apply for this position"]
 >
 > **You:** The third bullet is too long and leads with "we." Fix it.
 >
@@ -94,7 +94,7 @@ For interview prep:
 
 > **You:** Build me interview prep for GitHub, Senior People Analytics role.
 >
-> **Vox:** [delivers a company intel infographic, a tap-to-reveal flashcard set covering your pitch, known gaps, two or three STAR stories, questions to ask, and key facts about the company — plus a stock chart with RSU vesting seasonality if equity is in the offer]
+> **Vox:** [delivers a company intel infographic, a tap-to-reveal flashcard set covering your pitch, known gaps, two or three STAR stories, questions to ask, and key facts about the company, plus a stock chart with RSU vesting seasonality if equity is in the offer]
 
 One message. One complete prep package.
 
@@ -146,7 +146,7 @@ One message. One complete prep package.
 ### Step 1: Create a Claude Project
 
 1. Open [claude.ai](https://claude.ai) and navigate to **Projects**.
-2. Create a new Project. Name it whatever makes sense — `Vox`, your name, anything.
+2. Create a new Project. Name it whatever makes sense: `Vox`, your name, anything.
 3. You will add a system prompt and upload reference files in the next two steps.
 
 ### Step 2: Load the System Prompt
@@ -161,9 +161,9 @@ This is the core instruction set. It defines how Vox operates, what voices activ
 
 Upload the following files to the Project knowledge base:
 
-- `VOX_CONTEXT.md` — your professional background. Edit this before uploading to reflect your own history, target roles, comp requirements, and known gaps.
-- `STYLE_GUIDE.md` — writing rules. Edit or replace to match your voice.
-- `WORKFLOW_updated.md` — optional but useful for cover letter and JD workflows.
+- `VOX_CONTEXT.md` is your professional background. Edit this before uploading to reflect your own history, target roles, comp requirements, and known gaps.
+- `STYLE_GUIDE.md` holds the writing rules. Edit or replace to match your voice.
+- `WORKFLOW_updated.md` is optional but useful for cover letter and JD workflows.
 - Any persona files relevant to your use case. At minimum: `PERSONA_copy_editor.md` and `PERSONA_recruiter.md`.
 
 You can add or remove files anytime. The Project re-reads them on each session start.
@@ -174,13 +174,13 @@ This is the most important step. `VOX_CONTEXT.md` is what gives Vox specificity.
 
 The file should include:
 
-- **Professional summary** — 3-5 sentences, direct, no puffery
-- **Career history** — roles, companies, dates, scope, what you actually owned
-- **Key accomplishments** — specific, metric-driven, tied to real work
-- **Target roles and companies** — level, function, geography, remote preference
-- **Comp floor** — exact number, include equity requirements
-- **Known gaps** — be direct. Own them briefly, then pivot to adjacent strength.
-- **Voice** — how you write, what words you avoid, what sounds wrong to you
+- **Professional summary**: 3-5 sentences, direct, no puffery
+- **Career history**: roles, companies, dates, scope, what you actually owned
+- **Key accomplishments**: specific, metric-driven, tied to real work
+- **Target roles and companies**: level, function, geography, remote preference
+- **Comp floor**: exact number, include equity requirements
+- **Known gaps**: be direct. Own them briefly, then pivot to adjacent strength.
+- **Voice**: how you write, what words you avoid, what sounds wrong to you
 
 The more specific you are, the better the outputs. Vague context produces vague cover letters.
 
@@ -224,13 +224,13 @@ Describe the situation. Vox distinguishes between cold outreach (no job-seeking 
 
 A few decisions worth understanding if you adapt this system:
 
-**Context over prompting.** Most of the work happens in the reference files, not in the prompts you type. This is the central design decision — and the one most people get backwards when they try to build AI-assisted workflows. They spend energy on clever prompts and get generic outputs because the model has nothing specific to work with. A detailed `VOX_CONTEXT.md` — real accomplishments, real numbers, honest gaps, actual voice — produces outputs that sound like a specific person made them. A thin one produces polished noise. The prompt just directs the work. The context is the work.
+**Context over prompting.** Most of the work happens in the reference files, not in the prompts you type. This is the central design decision, and the one most people get backwards when they try to build AI-assisted workflows. They spend energy on clever prompts and get generic outputs because the model has nothing specific to work with. A detailed `VOX_CONTEXT.md` with real accomplishments, real numbers, honest gaps, and actual voice produces outputs that sound like a specific person made them. A thin one produces polished noise. The prompt just directs the work. The context is the work.
 
-**Full artifacts, not outlines.** Vox is configured to produce the complete deliverable — a full cover letter, a full flashcard set, a full email — not a skeleton to fill in. If the output needs editing, edit it. Don't ask for a draft.
+**Full artifacts, not outlines.** Vox is configured to produce the complete deliverable (a full cover letter, a full flashcard set, a full email), not a skeleton to fill in. If the output needs editing, edit it. Don't ask for a draft.
 
 **One question per session.** If a task is genuinely ambiguous, Vox asks one clarifying question before starting. Not a list. This keeps sessions from turning into requirement-gathering exercises.
 
-**Style rules as a linter.** The STYLE_GUIDE runs in the background on every output. No em dashes. No AI vocabulary. No passive voice. No rule-of-three. These aren't preferences — they're constraints. The output either passes or it doesn't.
+**Style rules as a linter.** The STYLE_GUIDE runs in the background on every output. No em dashes. No AI vocabulary. No passive voice. No rule-of-three. These aren't preferences, they're constraints. The output either passes or it doesn't.
 
 ---
 
@@ -238,18 +238,18 @@ A few decisions worth understanding if you adapt this system:
 
 You are not **itworkssly**. Here is what you need to change to make this yours:
 
-1. **`VOX_CONTEXT.md`** — replace entirely with your own background. This is the highest-leverage edit.
-2. **`STYLE_GUIDE.md`** — keep the structure, update the banned words and voice rules to match how you write.
-3. **Cover letter template settings** — the `.docx` template specs in `WORKFLOW_updated.md` reference specific fonts, colors, and margins. Update to match your preferred format.
-4. **Persona files** — keep what's relevant, drop what isn't. If you're not a PM, `PERSONA_pm_advocate.md` won't help you.
+1. **`VOX_CONTEXT.md`**: replace entirely with your own background. This is the highest-leverage edit.
+2. **`STYLE_GUIDE.md`**: keep the structure, update the banned words and voice rules to match how you write.
+3. **Cover letter template settings**: the `.docx` template specs in `WORKFLOW_updated.md` reference specific fonts, colors, and margins. Update to match your preferred format.
+4. **Persona files**: keep what's relevant, drop what isn't. If you're not a PM, `PERSONA_pm_advocate.md` won't help you.
 
-The system prompt in `VOX_SYSTEM_PROMPT.md` is portable as-is for most senior IC or people manager job searches. The five specialist voices (Editor, Publicist, Creative Director, Insider, Recruiter) apply broadly. You may want to update industry-specific references in The Insider's description.
+The system prompt in `VOX_SYSTEM_PROMPT.md` is portable as-is for most senior IC or people manager job searches. The persona panel applies broadly across roles. You may want to update industry-specific references in the personas that assume a particular function or company scale.
 
 ---
 
 ## Companion Tool
 
-**Veritas** — AI-native job evaluation and pipeline tracking, also in this repo.
+**Veritas** is AI-native job evaluation and pipeline tracking, also in this repo.
 
 - Live: [itworkssly.github.io/veritas](https://itworkssly.github.io/veritas)
 - Requires your Anthropic API key (never stored server-side)
